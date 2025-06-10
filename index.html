@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Prolog животни с различни правила и GIF</title>
+  <title>Prolog коли с различни правила и GIF</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -24,7 +24,7 @@
       font-size: 16px;
       margin-top: 10px;
       border-radius: 6px;
-      border: 2px solid #007acc;
+      border: 2px solid #d32f2f;
       padding: 8px;
       resize: vertical;
     }
@@ -32,7 +32,7 @@
       margin-top: 15px;
       padding: 10px 25px;
       font-size: 18px;
-      background-color: #007acc;
+      background-color: #d32f2f;
       border: none;
       color: white;
       border-radius: 8px;
@@ -40,115 +40,108 @@
       transition: background-color 0.3s ease;
     }
     button:hover {
-      background-color: #005f99;
+      background-color: #b71c1c;
     }
     #result {
       margin-top: 20px;
       font-size: 18px;
       min-height: 30px;
       font-weight: bold;
-      color: #004a99;
+      color: #b71c1c;
     }
-    .animal-container {
+    .car-container {
       margin-top: 30px;
       min-height: 160px;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: #d0e8ff;
+      background: #ffccbc;
       border-radius: 12px;
-      box-shadow: 0 0 10px #a0c4ff;
+      box-shadow: 0 0 10px #ff8a65;
     }
-    .animal-gif {
+    .car-gif {
       max-width: 180px;
       border-radius: 12px;
-      box-shadow: 0 0 10px #005f99;
+      box-shadow: 0 0 10px #b71c1c;
     }
   </style>
 </head>
 <body>
-  <h1>Задание: Програма с Prolog за животни и GIF визуализация</h1>
+  <h1>Задание: Програма с Prolog за коли и GIF визуализация</h1>
 
   <p class="instructions">
-    Имате задача да създадете малко приложение, което използва <strong>Пролог</strong> за логическо извеждане на животни.  
-    След като въведете Prolog заявка, програмата ще търси резултат и ако открие животно, ще покаже подходяща анимирана GIF картинка.  
+    Имате задача да създадете малко приложение, което използва <strong>Prolog</strong> за логическо извеждане на коли.  
+    След като въведете Prolog заявка, програмата ще търси резултат и ако открие кола, ще покаже подходяща анимирана GIF картинка.  
     <br><br>
     <strong>Как да добавите собствен Prolog код?</strong><br>
-    - В кода в променливата <code>knowledge</code> можете да добавяте нови животни и правила.<br>
-    - Например: <code>animal(elephant).</code> и съответно правила като <code>is_mammal(X) :- animal(X).</code><br>
+    - В кода в променливата <code>knowledge</code> можете да добавяте нови коли и правила.<br>
+    - Например: <code>car(tesla).</code> и съответно правила като <code>is_electric(X) :- car(X).</code><br>
     <br>
     <strong>Как да добавите нови GIF изображения?</strong><br>
     - Намерете подходящ анимиран GIF в интернет (например в <a href="https://giphy.com" target="_blank">Giphy</a> или друг сайт).<br>
     - Копирайте директния линк към GIF файла.<br>
-    - Добавете нов запис в обекта <code>animalAnimations</code> с името на животното и HTML за картинката, например:<br>
-    <code>elephant: '&lt;img src="your_gif_link.gif" class="animal-gif" alt="Elephant" /&gt;'</code><br>
-    - Не забравяйте да добавите и животното в Prolog базата.<br>
+    - Добавете нов запис в обекта <code>carAnimations</code> с името на колата и HTML за картинката, например:<br>
+    <code>tesla: '<img src="your_gif_link.gif" class="car-gif" alt="Tesla" />'</code><br>
+    - Не забравяйте да добавите и колата в Prolog базата.<br>
   </p>
 
-
-  <h1>Prolog животни с различни правила и GIF</h1>
+  <h1>Prolog коли с различни правила и GIF</h1>
 
   <textarea id="prolog-input">
 % Примери на заявки:
-is_mammal(X).
-is_big(X).
-is_predator(X).
+is_electric(X).
+is_sports(X).
+is_suv(X).
   </textarea><br />
   <button onclick="runProlog()">Изпълни</button>
 
   <div id="result"></div>
-  <div class="animal-container" id="animal-animation"></div>
+  <div class="car-container" id="car-animation"></div>
 
   <script src="https://unpkg.com/tau-prolog"></script>
   <script>
     const session = pl.create();
 
-    // Разширена база знания с животни и правила
+    // Разширена база знания с коли и правила
     const knowledge = `
-      animal(lion).
-animal(elephant).
-animal(tiger).
+      car(tesla).
+      car(ferrari).
+      car(jeep).
 
-% Козина (бозайници)
-mammal(lion).
+      % Електрически коли
+      electric(tesla).
 
+      % Спортни коли
+      sports(ferrari).
 
-% Големи животни
-big(elephant).
+      % SUV коли
+      suv(jeep).
 
-% Хищници
-
-predator(tiger).
-
-% Правила
-is_mammal(X) :- mammal(X).
-is_big(X) :- big(X).
-is_predator(X) :- predator(X).
-
+      % Правила
+      is_electric(X) :- electric(X).
+      is_sports(X) :- sports(X).
+      is_suv(X) :- suv(X).
     `;
 
     session.consult(knowledge);
 
-    const animalAnimations = {
-      lion: '<img src="https://images.ecency.com/p/FUkUE5bzkAZT3HzV5tJDiU2ik81PCd4JCyhWnRcDN8XJsVFY3UNB8DCcF6FBnrG9mHUsoB7296D4omrF75j3S9mNdXjzd7j2xiKroEuvcf5umt9qDsRKoeDp3kBezDQscLbJuZaCqh8sgthRd5GukLgMiH16xWrcxhxh.png?format=match&mode=fit" class="animal-gif" alt="Лъв анимация" />',
-      elephant: '<img src="https://media.giphy.com/media/2v170e71aanfi/giphy.gif" class="animal-gif" alt="Слон анимация" />',
-      tiger: '<img src="https://media.giphy.com/media/fANhQpcPGr2hO/giphy.gif" class="animal-gif" alt="Тигър анимация" />',
-      crocodile: '<img src="https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif" class="animal-gif" alt="Крокодил анимация" />',
-      kangaroo: '<img src="https://media.giphy.com/media/l0MYEw7nYdf6r62aI/giphy.gif" class="animal-gif" alt="Кенгуру анимация" />',
-      owl: '<img src="https://media.giphy.com/media/3ohs4B9Zz54HXGvoYs/giphy.gif" class="animal-gif" alt="Бухал анимация" />'
+    const carAnimations = {
+      tesla: '<img src="https://media.giphy.com/media/3o7btPCcdN8n5An5xK/giphy.gif" class="car-gif" alt="Tesla анимация" />',
+      ferrari: '<img src="https://media.giphy.com/media/26uf2YTgFOnGLeVGM/giphy.gif" class="car-gif" alt="Ferrari анимация" />',
+      jeep: '<img src="https://media.giphy.com/media/l0MYt5jPRbr1HODxC/giphy.gif" class="car-gif" alt="Jeep анимация" />'
     };
 
     function runProlog() {
       const input = document.getElementById("prolog-input").value;
       const resultDiv = document.getElementById("result");
-      const animDiv = document.getElementById("animal-animation");
+      const animDiv = document.getElementById("car-animation");
 
       resultDiv.innerHTML = "";
       animDiv.innerHTML = "";
 
       session.query(input);
       session.answers(answer => {
-        if(answer === false) {
+        if (answer === false) {
           resultDiv.innerHTML += `<p>Няма повече резултати.</p>`;
           return;
         }
@@ -161,16 +154,18 @@ is_predator(X) :- predator(X).
 
         const match = str.match(/X = (\w+)/);
         if (match) {
-          const animal = match[1];
-          if (animalAnimations[animal]) {
-            animDiv.innerHTML = animalAnimations[animal];
+          const car = match[1];
+          if (carAnimations[car]) {
+            animDiv.innerHTML = carAnimations[car];
           } else {
-            animDiv.innerHTML = "<p>Няма GIF за това животно.</p>";
+            animDiv.innerHTML = "<p>Няма GIF за тази кола.</p>";
           }
         }
       });
     }
   </script>
+</body>
+</html>
 
 </body>
 </html>
